@@ -3,13 +3,16 @@
  */
 package view;
 
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.WindowConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * @author s15
@@ -17,44 +20,46 @@ import javax.swing.WindowConstants;
  */
 public class MainFrame extends JFrame{
 	private PanelRegelName panelRegelName;
-	private JPanel regelNamePan, checkboxenPan, textfelderPan, ausgabePan;
-	private JTextField regelNameTf, startIpTf, zielIpTf, macTf, portTf;
-	private JLabel regelNameLa, startIpLa, zielIpLa, macLa, portLa;
+	private PanelComboBoxen panelCheckBoxen;
+	private PanelTextFelder panelTextFelder;
+	private PanelAusgabe panelAusgabe;
+	private PanelButtons panelButtons;
 
 	public MainFrame(){
 		// Fenster erstellen und Layout setzen
-		this.setSize(400,800);
-		this.setVisible(true);
-		this.setLocationRelativeTo(null);
-		this.setTitle("Firewall-Builder");
-		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		GridLayout grid = new GridLayout(4,0);
-		this.setLayout(grid);
+		setSize(400,600);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		setTitle("Firewall-Builder");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		// Panels hinzufügen
-		this.regelNamePan = new JPanel();
-		this.add(regelNamePan);
-		this.checkboxenPan = new JPanel();
-		this.add(checkboxenPan);
-		this.textfelderPan = new JPanel();
-		this.add(textfelderPan);
-		this.ausgabePan = new JPanel();
-		this.add(ausgabePan);
-		// Elemente auf die Panels verteilen
-		this.regelNameLa = new JLabel("Regelname"); 
-		this.startIpLa = new JLabel("Start-IP"); 
-		this.zielIpLa = new JLabel("Ziel-IP"); 
-		this.macLa = new JLabel("Mac-Adresse"); 
-		this.portLa = new JLabel("Ports");
-		this.regelNameTf = new JTextField(); 
-		this.startIpTf = new JTextField();   
-		this.zielIpTf = new JTextField();
-		this.macTf = new JTextField(); 
-		this.portTf = new JTextField();
-		this.regelNamePan.add(regelNameLa);
-		this.regelNamePan.add(regelNameTf);
+		panelRegelName = new PanelRegelName();
+		add(panelRegelName);
+		panelCheckBoxen = new PanelComboBoxen();
+		add(panelCheckBoxen);
+		panelTextFelder = new PanelTextFelder();
+		add(panelTextFelder);
+		panelAusgabe = new PanelAusgabe();
+		add(panelAusgabe);
+		panelButtons = new PanelButtons();
+		add(panelButtons);
 		pack();
-		
 	}
 	
-
 }
