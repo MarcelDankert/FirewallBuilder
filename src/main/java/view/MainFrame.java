@@ -16,6 +16,7 @@ import javax.swing.WindowConstants;
  *
  */
 public class MainFrame extends JFrame{
+	private PanelRegelName panelRegelName;
 	private JPanel regelNamePan, checkboxenPan, textfelderPan, ausgabePan;
 	private JTextField regelNameTf, startIpTf, zielIpTf, macTf, portTf;
 	private JLabel regelNameLa, startIpLa, zielIpLa, macLa, portLa;
