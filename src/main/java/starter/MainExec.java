@@ -1,9 +1,9 @@
 package starter;
 
-import view.MainFrame;
+import view.MyGui;
 
 public class MainExec {
 public static void main(String[] args) {
-	MainFrame gui = new MainFrame();
+	MyGui gui = new MyGui();
 }
 }
