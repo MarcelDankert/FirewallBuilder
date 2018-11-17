@@ -85,8 +85,8 @@ public class MyGui extends JFrame {
 		panelCheckBoxen = new JPanel();
 		panelCheckBoxen.setLayout(new GridLayout(2, 3));
 		panelCheckBoxen.setBorder(BorderFactory.createTitledBorder("2. Richtung und Protokoll wählen."));
-		String[] richtung = {"INPUT", "FORWARD", "OUTPUT"};
-		String[] protokoll = {"TCP", "UDP", "ICMP"};
+		String[] richtung = {null, "INPUT", "FORWARD", "OUTPUT"};
+		String[] protokoll = {null, "TCP", "UDP", "ICMP"};
 		richtungCombo = new JComboBox(richtung);
 		protokollCombo = new JComboBox(protokoll);
 		panelCheckBoxen.add(new JLabel("Richtung"));
