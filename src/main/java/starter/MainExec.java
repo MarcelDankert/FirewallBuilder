@@ -8,8 +8,7 @@ import view.MyGui;
 public class MainExec {
 	public static void main(String[] args) {
 		FileBuilder fileBuilder = new FileBuilder();
-		String dateiName = "firewall.sh";
-		fileBuilder.createFile(new File(dateiName));
+		fileBuilder.createFile(new File("firewall.sh"));
 		MyGui gui = new MyGui();
 	}
 }
