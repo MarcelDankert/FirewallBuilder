@@ -34,12 +34,18 @@ public class MyGui extends JFrame {
 	// Bausatz für Panel 1
 	private JPanel panelRegelName;
 	private JTextField regelNameTf;
+	private JPanel okPanelOne; 
+	private JButton panelOneBtn;
 	// Bausatz für Panel 2
 	private JPanel panelCheckBoxen;
 	private JComboBox richtungCombo, protokollCombo;
+	private JPanel okPanelTwo; 
+	private JButton panelTwoBtn;
 	// Bausatz für Panel 3
 	private JPanel panelTextFelder;
 	private JTextField quelleTf, zielTf, singlePortTf, multiPortsTf, macTf;
+	private JPanel okPanelThree; 
+	private JButton panelThreeBtn;
 	// Bausatz für Panel 4	
 	private JPanel panelAusgabe;
 	private JTextArea ausgabeArea;
@@ -74,32 +80,46 @@ public class MyGui extends JFrame {
 		
 		// Panel 1 zusammenbauen und hinzufügen
 		panelRegelName = new JPanel();
-		panelRegelName.setLayout(new GridLayout(2,0));
+		panelRegelName.setLayout(new GridLayout(3,0));
 		panelRegelName.setBorder(BorderFactory.createTitledBorder("1. Regelname festlegen"));
 		regelNameTf = new JTextField();
 		panelRegelName.add(new JLabel("Bitte geben Sie einen Regelname ein."));
 		panelRegelName.add(regelNameTf);
+		okPanelOne = new JPanel();
+		okPanelOne.setLayout(new GridLayout(1, 4));
+		okPanelOne.add(new JLabel());
+		okPanelOne.add(new JLabel());
+		okPanelOne.add(new JLabel());
+		panelOneBtn = new JButton("OK");
+		okPanelOne.add(panelOneBtn);
+		panelRegelName.add(okPanelOne);		
 		add(panelRegelName);
 		
 		// Panel 2 zusammenbauen und hinzufügen
 		panelCheckBoxen = new JPanel();
-		panelCheckBoxen.setLayout(new GridLayout(2, 3));
+		panelCheckBoxen.setLayout(new GridLayout(3, 2));
 		panelCheckBoxen.setBorder(BorderFactory.createTitledBorder("2. Richtung und Protokoll wählen."));
 		String[] richtung = {null, "INPUT", "FORWARD", "OUTPUT"};
 		String[] protokoll = {null, "TCP", "UDP", "ICMP"};
 		richtungCombo = new JComboBox(richtung);
 		protokollCombo = new JComboBox(protokoll);
 		panelCheckBoxen.add(new JLabel("Richtung"));
-		panelCheckBoxen.add(new JLabel());
 		panelCheckBoxen.add(new JLabel("Protokoll"));
 		panelCheckBoxen.add(richtungCombo);
-		panelCheckBoxen.add(new JLabel());
 		panelCheckBoxen.add(protokollCombo);
+		panelCheckBoxen.add(new JLabel());
+		
+		okPanelTwo = new JPanel();
+		okPanelTwo.setLayout(new GridLayout(1, 2));
+		okPanelTwo.add(new JLabel());
+		panelTwoBtn = new JButton("OK");
+		okPanelTwo.add(panelTwoBtn);
+		panelCheckBoxen.add(okPanelTwo);
 		add(panelCheckBoxen);
 		
 		// Panel 3 zusammenbauen und hinzufügen
 		panelTextFelder = new JPanel();
-		panelTextFelder.setLayout(new GridLayout(5, 2));
+		panelTextFelder.setLayout(new GridLayout(6, 2));
 		panelTextFelder.setBorder(BorderFactory.createTitledBorder("3. Adressen und Ports eingeben"));
 		quelleTf = new JTextField();
 		zielTf = new JTextField();
@@ -111,6 +131,13 @@ public class MyGui extends JFrame {
 		panelTextFelder.add(new JLabel("Einzelner Port")); panelTextFelder.add(singlePortTf);
 		panelTextFelder.add(new JLabel("Mehrere Ports")); panelTextFelder.add(multiPortsTf);
 		panelTextFelder.add(new JLabel("Mac-Adresse")); panelTextFelder.add(macTf);
+		panelTextFelder.add(new JLabel());
+		okPanelThree = new JPanel();
+		okPanelThree.setLayout(new GridLayout(1, 2));
+		okPanelThree.add(new JLabel());
+		panelThreeBtn = new JButton("OK");
+		okPanelThree.add(panelThreeBtn);
+		panelTextFelder.add(okPanelThree);		
 		add(panelTextFelder);
 		// Panel 4 zusammenbauen und hinzufügen
 		panelAusgabe = new JPanel();
