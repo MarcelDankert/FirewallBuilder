@@ -11,16 +11,33 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class FileBuilder {
-	private String newRule;
-
-	public String getNewRule() {
-		return newRule;
-	}
-
-	public void setNewRule(String newRule) {
-		this.newRule = newRule;
+	private String name, richtung, protokoll, quelle, ziel, mac, newRule;
+	private ArrayList<Integer> ports;
+	
+	
+	
+	/**
+	 * @param name
+	 * @param richtung
+	 * @param protokoll
+	 * @param quelle
+	 * @param ziel
+	 * @param mac
+	 * @param newRule
+	 * @param ports
+	 */
+	public FileBuilder() {
+		this.name = "";
+		this.richtung = "";
+		this.protokoll = "";
+		this.quelle = "";
+		this.ziel = "";
+		this.mac = "";
+		this.newRule = "";
+		this.ports = new ArrayList<>();
 	}
 
 	public void createFile(File file) {
@@ -63,4 +80,69 @@ public class FileBuilder {
 		writer.write(fileIntro);
 		writer.close();
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getRichtung() {
+		return richtung;
+	}
+
+	public void setRichtung(String richtung) {
+		this.richtung = richtung;
+	}
+
+	public String getProtokoll() {
+		return protokoll;
+	}
+
+	public void setProtokoll(String protokoll) {
+		this.protokoll = protokoll;
+	}
+
+	public String getQuelle() {
+		return quelle;
+	}
+
+	public void setQuelle(String quelle) {
+		this.quelle = quelle;
+	}
+
+	public String getZiel() {
+		return ziel;
+	}
+
+	public void setZiel(String ziel) {
+		this.ziel = ziel;
+	}
+
+	public String getMac() {
+		return mac;
+	}
+
+	public void setMac(String mac) {
+		this.mac = mac;
+	}
+
+	public String getNewRule() {
+		return newRule;
+	}
+
+	public void setNewRule(String newRule) {
+		this.newRule = newRule;
+	}
+
+	public ArrayList<Integer> getPorts() {
+		return ports;
+	}
+
+	public void setPorts(ArrayList<Integer> ports) {
+		this.ports = ports;
+	}
+	
 }

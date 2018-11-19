@@ -91,6 +91,7 @@ public class MyGui extends JFrame {
 		okPanelOne.add(new JLabel());
 		okPanelOne.add(new JLabel());
 		panelOneBtn = new JButton("OK");
+		panelOneBtn.addActionListener(new ActionHandler(this));
 		okPanelOne.add(panelOneBtn);
 		panelRegelName.add(okPanelOne);		
 		add(panelRegelName);
@@ -113,6 +114,7 @@ public class MyGui extends JFrame {
 		okPanelTwo.setLayout(new GridLayout(1, 2));
 		okPanelTwo.add(new JLabel());
 		panelTwoBtn = new JButton("OK");
+		panelTwoBtn.addActionListener(new ActionHandler(this));
 		okPanelTwo.add(panelTwoBtn);
 		panelCheckBoxen.add(okPanelTwo);
 		add(panelCheckBoxen);
@@ -136,6 +138,7 @@ public class MyGui extends JFrame {
 		okPanelThree.setLayout(new GridLayout(1, 2));
 		okPanelThree.add(new JLabel());
 		panelThreeBtn = new JButton("OK");
+		panelThreeBtn.addActionListener(new ActionHandler(this));
 		okPanelThree.add(panelThreeBtn);
 		panelTextFelder.add(okPanelThree);		
 		add(panelTextFelder);
@@ -160,6 +163,30 @@ public class MyGui extends JFrame {
 		panelButtons.add(exitBtn);
 		add(panelButtons);
 		pack();
+	}
+
+	public JButton getPanelOneBtn() {
+		return panelOneBtn;
+	}
+
+	public void setPanelOneBtn(JButton panelOneBtn) {
+		this.panelOneBtn = panelOneBtn;
+	}
+
+	public JButton getPanelTwoBtn() {
+		return panelTwoBtn;
+	}
+
+	public void setPanelTwoBtn(JButton panelTwoBtn) {
+		this.panelTwoBtn = panelTwoBtn;
+	}
+
+	public JButton getPanelThreeBtn() {
+		return panelThreeBtn;
+	}
+
+	public void setPanelThreeBtn(JButton panelThreeBtn) {
+		this.panelThreeBtn = panelThreeBtn;
 	}
 
 	public JPanel getPanelRegelName() {
