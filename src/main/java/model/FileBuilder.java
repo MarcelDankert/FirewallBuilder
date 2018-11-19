@@ -22,7 +22,14 @@ public class FileBuilder {
 	public FileBuilder() {
 		this.resetFileBuilder();
 		this.map = new HashMap<>();
-		map.put("key", "value");
+		map.put("IPT", "/sbin/iptables");
+		map.put("TCP", "tcp -m tcp");
+		map.put("UDP", "udp -m udp");
+		map.put("ICMP", "icmp -m icmp --icmp-type 8/0");
+	}
+	public String buildNewRule() {
+		newRule = map.get("IPT") + " -A " + this.richtung + " -p " + map.get(this.protokoll);
+		return newRule;
 	}
 
 	public void createFile(File file) {

@@ -52,6 +52,7 @@ public class ActionHandler implements ActionListener {
 				mf.getPanelTwoBtn().setEnabled(false);
 				mf.getPanelThreeBtn().setEnabled(true);
 				mf.getAddPortBtn().setEnabled(true);
+				System.out.println(fb.getRichtung() + " " + fb.getMap().get(fb.getProtokoll()));
 			}
 		}
 		
@@ -69,7 +70,7 @@ public class ActionHandler implements ActionListener {
 				fb.setMac(mf.getMacTf().getText());
 				mf.getPanelThreeBtn().setEnabled(false);
 				mf.getSaveBtn().setEnabled(true);
-				mf.getAusgabeArea().setText(mf.getAusgabeArea().getText() + " " + fb.getQuelle() + " " + fb.getZiel() + " " + fb.getPorts().toString() + " " + fb.getMac());
+				mf.getAusgabeArea().setText(fb.buildNewRule());
 			}
 		}
 		if (e.getSource()==mf.getAddPortBtn()) {
