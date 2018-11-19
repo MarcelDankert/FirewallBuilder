@@ -12,24 +12,31 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FileBuilder {
 	private String name, richtung, protokoll, quelle, ziel, mac, newRule;
-	private ArrayList<Integer> ports;
+	private ArrayList<String> ports;
+	private HashMap<String, String> map;
 	
-	
-	
-	/**
-	 * @param name
-	 * @param richtung
-	 * @param protokoll
-	 * @param quelle
-	 * @param ziel
-	 * @param mac
-	 * @param newRule
-	 * @param ports
-	 */
 	public FileBuilder() {
+		this.resetFileBuilder();
+		this.map = new HashMap<>();
+		map.put("key", "value");
+	}
+
+	public void createFile(File file) {
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+				this.writeNewFile();
+			} catch (IOException e) {
+				System.err.println("Error creating " + file.toString());
+			}
+		}
+	}
+
+	public void resetFileBuilder() {
 		this.name = "";
 		this.richtung = "";
 		this.protokoll = "";
@@ -40,19 +47,8 @@ public class FileBuilder {
 		this.ports = new ArrayList<>();
 	}
 
-	public void createFile(File file) {
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-				this.usingBufferedWritter();
-			} catch (IOException e) {
-				System.err.println("Error creating " + file.toString());
-			}
-		}
-	}
-
-	public void usingBufferedWritter() throws IOException {
-		String fileIntro = "#!/bin/sh\r\n" + "\r\n" + "IPT=\"/sbin/iptables\"\r\n" + "\r\n"
+	public void writeNewFile() throws IOException {
+		String fileContent = "#!/bin/sh\r\n" + "\r\n" + "IPT=\"/sbin/iptables\"\r\n" + "\r\n"
 				+ "IU=\"/sbin/iptables -A INPUT -p udp -m udp\"\r\n"
 				+ "IT=\"/sbin/iptables -A INPUT -p tcp -m tcp\"\r\n"
 				+ "II=\"/sbin/iptables -A INPUT -p icmp -m icmp --icmp-type 8/0\"\r\n" + "\r\n"
@@ -77,8 +73,16 @@ public class FileBuilder {
 				+ "/sbin/sysctl -w net.ipv4.ip_forward=1";
 
 		BufferedWriter writer = new BufferedWriter(new FileWriter("firewall.sh"));
-		writer.write(fileIntro);
+		writer.write(fileContent);
 		writer.close();
+	}
+
+	public HashMap<String, String> getMap() {
+		return map;
+	}
+
+	public void setMap(HashMap<String, String> map) {
+		this.map = map;
 	}
 
 	public String getName() {
@@ -137,12 +141,12 @@ public class FileBuilder {
 		this.newRule = newRule;
 	}
 
-	public ArrayList<Integer> getPorts() {
+	public ArrayList<String> getPorts() {
 		return ports;
 	}
 
-	public void setPorts(ArrayList<Integer> ports) {
+	public void setPorts(ArrayList<String> ports) {
 		this.ports = ports;
 	}
-	
+
 }
