@@ -11,31 +11,44 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FileBuilder {
-	private String newRule;
-
-	public String getNewRule() {
-		return newRule;
-	}
-
-	public void setNewRule(String newRule) {
-		this.newRule = newRule;
+	private String name, richtung, protokoll, quelle, ziel, mac, newRule;
+	private ArrayList<String> ports;
+	private HashMap<String, String> map;
+	
+	public FileBuilder() {
+		this.resetFileBuilder();
+		this.map = new HashMap<>();
+		map.put("key", "value");
 	}
 
 	public void createFile(File file) {
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
-				this.usingBufferedWritter();
+				this.writeNewFile();
 			} catch (IOException e) {
 				System.err.println("Error creating " + file.toString());
 			}
 		}
 	}
 
-	public void usingBufferedWritter() throws IOException {
-		String fileIntro = "#!/bin/sh\r\n" + "\r\n" + "IPT=\"/sbin/iptables\"\r\n" + "\r\n"
+	public void resetFileBuilder() {
+		this.name = "";
+		this.richtung = "";
+		this.protokoll = "";
+		this.quelle = "";
+		this.ziel = "";
+		this.mac = "";
+		this.newRule = "";
+		this.ports = new ArrayList<>();
+	}
+
+	public void writeNewFile() throws IOException {
+		String fileContent = "#!/bin/sh\r\n" + "\r\n" + "IPT=\"/sbin/iptables\"\r\n" + "\r\n"
 				+ "IU=\"/sbin/iptables -A INPUT -p udp -m udp\"\r\n"
 				+ "IT=\"/sbin/iptables -A INPUT -p tcp -m tcp\"\r\n"
 				+ "II=\"/sbin/iptables -A INPUT -p icmp -m icmp --icmp-type 8/0\"\r\n" + "\r\n"
@@ -60,7 +73,80 @@ public class FileBuilder {
 				+ "/sbin/sysctl -w net.ipv4.ip_forward=1";
 
 		BufferedWriter writer = new BufferedWriter(new FileWriter("firewall.sh"));
-		writer.write(fileIntro);
+		writer.write(fileContent);
 		writer.close();
 	}
+
+	public HashMap<String, String> getMap() {
+		return map;
+	}
+
+	public void setMap(HashMap<String, String> map) {
+		this.map = map;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getRichtung() {
+		return richtung;
+	}
+
+	public void setRichtung(String richtung) {
+		this.richtung = richtung;
+	}
+
+	public String getProtokoll() {
+		return protokoll;
+	}
+
+	public void setProtokoll(String protokoll) {
+		this.protokoll = protokoll;
+	}
+
+	public String getQuelle() {
+		return quelle;
+	}
+
+	public void setQuelle(String quelle) {
+		this.quelle = quelle;
+	}
+
+	public String getZiel() {
+		return ziel;
+	}
+
+	public void setZiel(String ziel) {
+		this.ziel = ziel;
+	}
+
+	public String getMac() {
+		return mac;
+	}
+
+	public void setMac(String mac) {
+		this.mac = mac;
+	}
+
+	public String getNewRule() {
+		return newRule;
+	}
+
+	public void setNewRule(String newRule) {
+		this.newRule = newRule;
+	}
+
+	public ArrayList<String> getPorts() {
+		return ports;
+	}
+
+	public void setPorts(ArrayList<String> ports) {
+		this.ports = ports;
+	}
+
 }
