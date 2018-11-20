@@ -31,7 +31,7 @@ public class ActionHandler implements ActionListener {
 						"Fehlende Eingaben", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else {
-				fb.setName("echo \"" + mf.getRegelNameTf().getText() + "\"\r\n");
+				fb.setName("echo \"" + mf.getRegelNameTf().getText() + "\"\r\n" + fb.getMap().get("IPT") + " ");
 				mf.getPanelOneBtn().setEnabled(false);
 				mf.getPanelTwoBtn().setEnabled(true);
 				mf.getAusgabeArea().setText(fb.getName());
@@ -48,11 +48,10 @@ public class ActionHandler implements ActionListener {
 			} else {
 				fb.setRichtung((String) mf.getRichtungCombo().getSelectedItem());
 				fb.setProtokoll((String) mf.getProtokollCombo().getSelectedItem());
-				mf.getAusgabeArea().setText(mf.getAusgabeArea().getText()+fb.getRichtung() + " " + fb.getProtokoll());
+				mf.getAusgabeArea().setText(mf.getAusgabeArea().getText()+fb.getRichtung() + " -A " + fb.getMap().get(fb.getProtokoll()) + " -p ");
 				mf.getPanelTwoBtn().setEnabled(false);
 				mf.getPanelThreeBtn().setEnabled(true);
 				mf.getAddPortBtn().setEnabled(true);
-				System.out.println(fb.getRichtung() + " " + fb.getMap().get(fb.getProtokoll()));
 			}
 		}
 		
