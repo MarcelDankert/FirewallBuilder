@@ -88,8 +88,9 @@ public class ActionHandler implements ActionListener {
 				}
 				else {
 					fb.setPortpara(" --dports ");
+					fb.setMultiport(fb.getMap().get("MP"));
 				}
-				stringBuilder.append(" " + fb.getMap().get("MAC") + fb.getMac() + fb.getQuelle() + fb.getZiel() + fb.getPortpara() + String.join(",", fb.getPorts()) + " " + fb.getMap().get("R"));
+				stringBuilder.append(fb.getMultiport() + fb.getMap().get("MAC") + fb.getMac() + fb.getQuelle() + fb.getZiel() + fb.getPortpara() + String.join(",", fb.getPorts()) + " " + fb.getMap().get("R"));
 				mf.getAusgabeArea().setText(stringBuilder.toString());
 			}
 		}
@@ -104,10 +105,6 @@ public class ActionHandler implements ActionListener {
 		
 		
 		if (e.getSource() == mf.getSaveBtn()) {
-			if (mf.getRegelNameTf().getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Bitte überprüfen Sie, ob alle Felder korrekt ausgefüllt sind.",
-						"Fehlende Eingaben", JOptionPane.INFORMATION_MESSAGE);
-			} else {
 				mf.getAusgabeArea().setText("#" + mf.getRegelNameTf().getText());
 				try (BufferedWriter writer = new BufferedWriter(new FileWriter("firewall.sh"))) {
 					try {
@@ -124,7 +121,7 @@ public class ActionHandler implements ActionListener {
 				}
 				mf.resetWindow();
 				fb.resetFileBuilder();
-			}
+			
 		}
 		/*
 		 * Der Neue Regel Button setzt alle Felder und Buttons zurück
@@ -132,6 +129,7 @@ public class ActionHandler implements ActionListener {
 		if (e.getSource() == mf.getNewBtn()) {
 			mf.resetWindow();
 			fb.resetFileBuilder();
+			stringBuilder = new StringBuilder();
 		}
 		/*
 		 * Der Exit Button beendet das Programm und schließt das Fenster

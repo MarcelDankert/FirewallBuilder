@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileBuilder {
-	private String name, richtung, protokoll, quelle, ziel, mac, newRule, portpara;
+	private String name, richtung, protokoll, quelle, ziel, mac, newRule, portpara, multiport;
 	private ArrayList<String> ports;
 	private HashMap<String, String> map;
 	
@@ -23,12 +23,13 @@ public class FileBuilder {
 	public FileBuilder() {
 		this.resetFileBuilder();
 		this.map = new HashMap<>();
+		this.multiport="";
 		map.put("IPT", "/sbin/iptables");
-		map.put("TCP", "tcp -m tcp");
-		map.put("UDP", "udp -m udp");
-		map.put("ICMP", "icmp -m icmp --icmp-type 8/0");
-		map.put("MAC", "-m mac --mac-source ");
-		map.put("MP", "-m multiport");
+		map.put("TCP", " tcp -m tcp");
+		map.put("UDP", " udp -m udp");
+		map.put("ICMP", " icmp -m icmp --icmp-type 8/0");
+		map.put("MAC", " -m mac --mac-source ");
+		map.put("MP", " -m multiport");
 		map.put("R", "-m conntrack --ctstate NEW -j ACCEPT");
 	}
 
@@ -171,6 +172,14 @@ public class FileBuilder {
 
 	public void setPorts(ArrayList<String> ports) {
 		this.ports = ports;
+	}
+
+	public String getMultiport() {
+		return multiport;
+	}
+
+	public void setMultiport(String multiport) {
+		this.multiport = multiport;
 	}
 
 }
