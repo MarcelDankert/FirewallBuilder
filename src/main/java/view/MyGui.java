@@ -53,8 +53,10 @@ public class MyGui extends JFrame {
 	// Bausatz für Panel 5
 	private JPanel panelButtons;
 	private JButton saveBtn, newBtn, exitBtn;
+	private ActionHandler handler;
 
 	public MyGui() {
+		handler = new ActionHandler(this);
 		// Fenster erstellen und Layout setzen
 		setSize(400, 600);
 		setVisible(true);
@@ -92,7 +94,7 @@ public class MyGui extends JFrame {
 		okPanelOne.add(new JLabel());
 		okPanelOne.add(new JLabel());
 		panelOneBtn = new JButton("OK");
-		panelOneBtn.addActionListener(new ActionHandler(this));
+		panelOneBtn.addActionListener(handler);
 		okPanelOne.add(panelOneBtn);
 		panelRegelName.add(okPanelOne);
 		add(panelRegelName);
@@ -104,9 +106,9 @@ public class MyGui extends JFrame {
 		String[] richtung = { null, "INPUT", "FORWARD", "OUTPUT" };
 		String[] protokoll = { null, "TCP", "UDP", "ICMP" };
 		richtungCombo = new JComboBox(richtung);
-		richtungCombo.addActionListener(new ActionHandler(this));
+		richtungCombo.addActionListener(handler);
 		protokollCombo = new JComboBox(protokoll);
-		protokollCombo.addActionListener(new ActionHandler(this));
+		protokollCombo.addActionListener(handler);
 		panelCheckBoxen.add(new JLabel("Richtung"));
 		panelCheckBoxen.add(new JLabel("Protokoll"));
 		panelCheckBoxen.add(richtungCombo);
@@ -117,7 +119,7 @@ public class MyGui extends JFrame {
 		okPanelTwo.setLayout(new GridLayout(1, 2));
 		okPanelTwo.add(new JLabel());
 		panelTwoBtn = new JButton("OK");		
-		panelTwoBtn.addActionListener(new ActionHandler(this));
+		panelTwoBtn.addActionListener(handler);
 		okPanelTwo.add(panelTwoBtn);
 		panelCheckBoxen.add(okPanelTwo);
 		add(panelCheckBoxen);
@@ -138,7 +140,7 @@ public class MyGui extends JFrame {
 		panelTextFelder.add(zielTf);
 		portPanel = new JPanel(new GridLayout(1, 2));
 		addPortBtn = new JButton("+");
-		addPortBtn.addActionListener(new ActionHandler(this));
+		addPortBtn.addActionListener(handler);
 		panelTextFelder.add(new JLabel("Ports hinzufügen"));
 		panelTextFelder.add(portPanel);
 		portPanel.add(singlePortTf);
@@ -152,7 +154,7 @@ public class MyGui extends JFrame {
 		okPanelThree.setLayout(new GridLayout(1, 2));
 		okPanelThree.add(new JLabel());
 		panelThreeBtn = new JButton("OK");
-		panelThreeBtn.addActionListener(new ActionHandler(this));
+		panelThreeBtn.addActionListener(handler);
 		okPanelThree.add(panelThreeBtn);
 		panelTextFelder.add(okPanelThree);
 		add(panelTextFelder);
@@ -160,6 +162,7 @@ public class MyGui extends JFrame {
 		panelAusgabe = new JPanel();
 		panelAusgabe.setBorder(BorderFactory.createTitledBorder("4. Vorschau überprüfen"));
 		ausgabeArea = new JTextArea(10, 30);
+		ausgabeArea.setLineWrap(true);
 		panelAusgabe.add(ausgabeArea);
 		add(panelAusgabe);
 		// Panel 5 zusammenbauen und hinzufügen
@@ -167,11 +170,11 @@ public class MyGui extends JFrame {
 		panelButtons.setLayout(new GridLayout(0, 3));
 		panelButtons.setBorder(BorderFactory.createTitledBorder("5. Speichern, Neu Anfangen oder Beenden"));
 		saveBtn = new JButton("Speichern");
-		saveBtn.addActionListener(new ActionHandler(this));
+		saveBtn.addActionListener(handler);
 		newBtn = new JButton("Neue Regel");
-		newBtn.addActionListener(new ActionHandler(this));
+		newBtn.addActionListener(handler);
 		exitBtn = new JButton("Beenden");
-		exitBtn.addActionListener(new ActionHandler(this));
+		exitBtn.addActionListener(handler);
 		panelButtons.add(saveBtn);
 		panelButtons.add(newBtn);
 		panelButtons.add(exitBtn);
@@ -181,7 +184,8 @@ public class MyGui extends JFrame {
 	}
 
 	public void resetWindow() {
-		// Buttons sperren
+		// Buttons einstellen
+		panelOneBtn.setEnabled(true);
 		panelTwoBtn.setEnabled(false);
 		addPortBtn.setEnabled(false);
 		panelThreeBtn.setEnabled(false);
@@ -196,6 +200,8 @@ public class MyGui extends JFrame {
 		singlePortTf.setText(null);
 		macTf.setText(null);
 		ausgabeArea.setText(null);
+		singlePortTf.setEnabled(true);
+		multiPortsTf.setEnabled(true);
 	}
 
 	public JButton getAddPortBtn() {
