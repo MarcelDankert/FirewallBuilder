@@ -3,19 +3,22 @@ package model;
  * 
  */
 
+import java.io.BufferedReader;
 /**
  * @author s15
  *
  */
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileBuilder {
-	private String name, richtung, protokoll, quelle, ziel, mac, newRule, portpara, multiport;
+	private String name, richtung, protokoll, quelle, ziel, mac, newRule, portpara, multiport, end;
 	private ArrayList<String> ports;
 	private HashMap<String, String> map;
 	
@@ -23,7 +26,14 @@ public class FileBuilder {
 	public FileBuilder() {
 		this.resetFileBuilder();
 		this.map = new HashMap<>();
-		this.multiport="";
+		this.multiport=""; 
+		this.end = "\r\n"+
+				"echo \"catch all\"\r\n"+
+				"/sbin/iptables -A INPUT -j DROP\r\n"+
+				"/sbin/iptables -A OUTPUT -j DROP\r\n"+
+				"/sbin/iptables -A FORWARD -j DROP\r\n"+
+				"\r\n"+
+				"/sbin/sysctl -w net.ipv4.ip_forward=1";
 		map.put("IPT", "/sbin/iptables");
 		map.put("TCP", " tcp -m tcp");
 		map.put("UDP", " udp -m udp");
@@ -43,7 +53,17 @@ public class FileBuilder {
 			}
 		}
 	}
-
+	public void appendNewRule(String newRule) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader("firewall.sh"));
+	    StringBuilder builder = new StringBuilder();
+	    String currentLine = reader.readLine();
+	    while (currentLine != null) {
+	        builder.append(currentLine);
+	        builder.append("n");
+	        currentLine = reader.readLine();
+	    }	     
+	    reader.close();
+	}
 	public void resetFileBuilder() {
 		this.name = "";
 		this.richtung = "";
@@ -80,14 +100,7 @@ public class FileBuilder {
 				"\r\n"+
 				"echo \"alles auf localhost\"\r\n"+
 				"/sbin/iptables -A INPUT -i lo -m conntrack --ctstate NEW -j ACCEPT\r\n"+
-				"/sbin/iptables -A OUTPUT\r\n"+ 
-				"\r\n"+
-				"echo \"catch all\"\r\n"+
-				"/sbin/iptables -A INPUT -j DROP\r\n"+
-				"/sbin/iptables -A OUTPUT -j DROP\r\n"+
-				"/sbin/iptables -A FORWARD -j DROP\r\n"+
-				"\r\n"+
-				"/sbin/sysctl -w net.ipv4.ip_forward=1";
+				"/sbin/iptables -A OUTPUT\r\n"+ this.end;
 
 		BufferedWriter writer = new BufferedWriter(new FileWriter("firewall.sh"));
 		writer.write(fileContent);
@@ -108,6 +121,14 @@ public class FileBuilder {
 
 	public void setMap(HashMap<String, String> map) {
 		this.map = map;
+	}
+
+	public String getEnd() {
+		return end;
+	}
+
+	public void setEnd(String end) {
+		this.end = end;
 	}
 
 	public String getName() {

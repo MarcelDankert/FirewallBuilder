@@ -1,2 +1,8 @@
-echo "qwe"
-/sbin/iptables -A INPUT -p tcp -m tcp -m mac --mac-source 213213 -s qwewqe -d qwewqe --dport 213,12123 -m conntrack --ctstate NEW -j ACCEPT
+echo "asda"
+/sbin/iptables -A FORWARD -p  tcp -m tcp -m multiport -m mac --mac-source asdasd -s asd -d asd --dports asd,asd -m conntrack --ctstate NEW -j ACCEPT
+echo "catch all"
+/sbin/iptables -A INPUT -j DROP
+/sbin/iptables -A OUTPUT -j DROP
+/sbin/iptables -A FORWARD -j DROP
+
+/sbin/sysctl -w net.ipv4.ip_forward=1

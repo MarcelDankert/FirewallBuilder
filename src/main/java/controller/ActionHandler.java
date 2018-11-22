@@ -105,10 +105,10 @@ public class ActionHandler implements ActionListener {
 		
 		
 		if (e.getSource() == mf.getSaveBtn()) {
-				mf.getAusgabeArea().setText("#" + mf.getRegelNameTf().getText());
+				fb.setNewRule(stringBuilder.toString() + fb.getEnd());
 				try (BufferedWriter writer = new BufferedWriter(new FileWriter("firewall.sh"))) {
 					try {
-						writer.write(stringBuilder.toString());
+						writer.write(fb.getNewRule());
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -119,6 +119,8 @@ public class ActionHandler implements ActionListener {
 					e1.printStackTrace();
 					
 				}
+				JOptionPane.showMessageDialog(null, "Regel gespeichert.",
+						"Hinweis", JOptionPane.INFORMATION_MESSAGE);
 				mf.resetWindow();
 				fb.resetFileBuilder();
 			
