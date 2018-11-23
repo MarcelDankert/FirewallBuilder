@@ -16,24 +16,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class FileBuilder {
 	private String name, richtung, protokoll, quelle, ziel, mac, newRule, portpara, multiport, end;
 	private ArrayList<String> ports;
 	private HashMap<String, String> map;
-	
 
 	public FileBuilder() {
 		this.resetFileBuilder();
 		this.map = new HashMap<>();
-		this.multiport=""; 
-		this.end = "\r\n"+
-				"echo \"catch all\"\r\n"+
-				"/sbin/iptables -A INPUT -j DROP\r\n"+
-				"/sbin/iptables -A OUTPUT -j DROP\r\n"+
-				"/sbin/iptables -A FORWARD -j DROP\r\n"+
-				"\r\n"+
-				"/sbin/sysctl -w net.ipv4.ip_forward=1";
+		this.multiport = "";
+		this.end = "\r\n" + "\r\n" + "echo \"catch all\"\r\n" + "/sbin/iptables -A INPUT -j DROP\r\n"
+				+ "/sbin/iptables -A OUTPUT -j DROP\r\n" + "/sbin/iptables -A FORWARD -j DROP\r\n" + "\r\n"
+				+ "/sbin/sysctl -w net.ipv4.ip_forward=1";
 		map.put("IPT", "/sbin/iptables");
 		map.put("TCP", " tcp -m tcp");
 		map.put("UDP", " udp -m udp");
@@ -53,17 +49,52 @@ public class FileBuilder {
 			}
 		}
 	}
+
 	public void appendNewRule(String newRule) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader("firewall.sh"));
-	    StringBuilder builder = new StringBuilder();
-	    String currentLine = reader.readLine();
-	    while (currentLine != null) {
-	        builder.append(currentLine);
-	        builder.append("n");
-	        currentLine = reader.readLine();
-	    }	     
-	    reader.close();
+
+		BufferedWriter bw = null;
+
+		try {
+			// APPEND MODE SET HERE
+			bw = new BufferedWriter(new FileWriter("firewall.sh", true));
+			bw.write(newRule);
+			bw.newLine();
+			bw.flush();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} finally { // always close the file
+			if (bw != null)
+				try {
+					bw.close();
+				} catch (IOException ioe2) {
+					// just ignore it
+				}
+		} // end try/catch/finally
+
+	} // end test()
+
+	public void eraseLast() {
+		StringBuilder s = new StringBuilder();
+		Scanner reader = new Scanner(new BufferedReader(new FileReader("firewall.sh")));
+		while (reader.hasNextLine()) {
+			String line = reader.readLine();
+			if (reader.hasNextLine()) {
+				s.append(line);
+			}
+		}
+		try {
+			fWriter = new FileWriter("config/lastWindow.txt");
+			writer = new BufferedWriter(fWriter);
+
+			writer.write(s.toString());
+
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+
 	public void resetFileBuilder() {
 		this.name = "";
 		this.richtung = "";
@@ -76,31 +107,17 @@ public class FileBuilder {
 	}
 
 	public void writeNewFile() throws IOException {
-		String fileContent = 
-				"#!/bin/sh\r\n"+
-				"\r\n"+
-				"modprobe ip_conntrack\r\n"+ 
-				"modprobe ip_conntrack_ftp\r\n"+
-				"\r\n"+
-				"/sbin/iptables -F\r\n"+
-				"/sbin/iptables -X\r\n"+
-				"/sbin/iptables -t nat -F\r\n"+
-				"/sbin/iptables -t nat -X\r\n"+
-				"/sbin/iptables -t mangle -F\r\n"+
-				"/sbin/iptables -t mangle -X\r\n"+
-				"\r\n"+
-				"/sbin/iptables -P INPUT DROP\r\n"+
-				"/sbin/iptables -P OUTPUT DROP\r\n"+
-				"/sbin/iptables -P FORWARD DROP\r\n"+
-				"\r\n"+
-				"/sbin/iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT\r\n"+
-				"/sbin/iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT\r\n"+
-				"/sbin/iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT\r\n"+
-				"\r\n"+
-				"\r\n"+
-				"echo \"alles auf localhost\"\r\n"+
-				"/sbin/iptables -A INPUT -i lo -m conntrack --ctstate NEW -j ACCEPT\r\n"+
-				"/sbin/iptables -A OUTPUT\r\n"+ this.end;
+		String fileContent = "#!/bin/sh\r\n" + "\r\n" + "modprobe ip_conntrack\r\n" + "modprobe ip_conntrack_ftp\r\n"
+				+ "\r\n" + "/sbin/iptables -F\r\n" + "/sbin/iptables -X\r\n" + "/sbin/iptables -t nat -F\r\n"
+				+ "/sbin/iptables -t nat -X\r\n" + "/sbin/iptables -t mangle -F\r\n" + "/sbin/iptables -t mangle -X\r\n"
+				+ "\r\n" + "/sbin/iptables -P INPUT DROP\r\n" + "/sbin/iptables -P OUTPUT DROP\r\n"
+				+ "/sbin/iptables -P FORWARD DROP\r\n" + "\r\n"
+				+ "/sbin/iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT\r\n"
+				+ "/sbin/iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT\r\n"
+				+ "/sbin/iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT\r\n" + "\r\n" + "\r\n"
+				+ "echo \"alles auf localhost\"\r\n"
+				+ "/sbin/iptables -A INPUT -i lo -m conntrack --ctstate NEW -j ACCEPT\r\n"
+				+ "/sbin/iptables -A OUTPUT\r\n" + this.end;
 
 		BufferedWriter writer = new BufferedWriter(new FileWriter("firewall.sh"));
 		writer.write(fileContent);
