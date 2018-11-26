@@ -58,7 +58,7 @@ public class ActionHandler implements ActionListener {
 				if (fb.getProtokoll().equals("ICMP")) {
 					mf.getSinglePortTf().setEnabled(false);
 					mf.getMultiPortsTf().setEnabled(false);
-					mf.getAddPortBtn().setEnabled(true);
+					mf.getAddPortBtn().setEnabled(false);
 				}
 			}
 		}
@@ -78,8 +78,9 @@ public class ActionHandler implements ActionListener {
 				fb.setMac(mf.getMacTf().getText());
 				mf.getPanelThreeBtn().setEnabled(false);
 				mf.getSaveBtn().setEnabled(true);
-				if (fb.getPorts().isEmpty()) {
+				if (fb.getPorts().size() == 0) {
 					fb.setPortpara("");
+					fb.setMultiport("");
 				} else if (fb.getPorts().size() == 1) {
 					fb.setPortpara(" --dport ");
 				} else if (fb.getPorts().size() > 1){

@@ -3,7 +3,6 @@
  */
 package view;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
@@ -37,19 +36,23 @@ public class MyGui extends JFrame {
 	private JTextField regelNameTf;
 	private JPanel okPanelOne;
 	private JButton panelOneBtn;
+	
 	// Bausatz für Panel 2
 	private JPanel panelCheckBoxen;
 	private JComboBox richtungCombo, protokollCombo;
 	private JPanel okPanelTwo;
 	private JButton panelTwoBtn;
+	
 	// Bausatz für Panel 3
 	private JPanel panelTextFelder, portPanel;
 	private JTextField quelleTf, zielTf, singlePortTf, multiPortsTf, macTf;
 	private JPanel okPanelThree;
 	private JButton panelThreeBtn, addPortBtn;
+	
 	// Bausatz für Panel 4
 	private JPanel panelAusgabe;
 	private JTextArea ausgabeArea;
+	
 	// Bausatz für Panel 5
 	private JPanel panelButtons;
 	private JButton saveBtn, newBtn, exitBtn;
@@ -58,7 +61,8 @@ public class MyGui extends JFrame {
 	public MyGui() {
 		handler = new ActionHandler(this);
 		// Fenster erstellen und Layout setzen
-		setSize(400, 600);
+		setSize(450, 600);
+		setResizable(false);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setTitle("Firewall-Builder");
@@ -79,8 +83,8 @@ public class MyGui extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		// Panels hinzufügen
-
 		// Panel 1 zusammenbauen und hinzufügen
 		panelRegelName = new JPanel();
 		panelRegelName.setLayout(new GridLayout(3, 0));
@@ -114,7 +118,6 @@ public class MyGui extends JFrame {
 		panelCheckBoxen.add(richtungCombo);
 		panelCheckBoxen.add(protokollCombo);
 		panelCheckBoxen.add(new JLabel());
-
 		okPanelTwo = new JPanel();
 		okPanelTwo.setLayout(new GridLayout(1, 2));
 		okPanelTwo.add(new JLabel());
@@ -158,6 +161,7 @@ public class MyGui extends JFrame {
 		okPanelThree.add(panelThreeBtn);
 		panelTextFelder.add(okPanelThree);
 		add(panelTextFelder);
+		
 		// Panel 4 zusammenbauen und hinzufügen
 		panelAusgabe = new JPanel();
 		panelAusgabe.setBorder(BorderFactory.createTitledBorder("4. Vorschau überprüfen"));
@@ -165,6 +169,7 @@ public class MyGui extends JFrame {
 		ausgabeArea.setLineWrap(true);
 		panelAusgabe.add(ausgabeArea);
 		add(panelAusgabe);
+		
 		// Panel 5 zusammenbauen und hinzufügen
 		panelButtons = new JPanel();
 		panelButtons.setLayout(new GridLayout(0, 3));
@@ -207,169 +212,63 @@ public class MyGui extends JFrame {
 	public JButton getAddPortBtn() {
 		return addPortBtn;
 	}
-
-	public void setAddPortBtn(JButton addPortBtn) {
-		this.addPortBtn = addPortBtn;
-	}
-
 	public JButton getPanelOneBtn() {
 		return panelOneBtn;
-	}
-
-	public void setPanelOneBtn(JButton panelOneBtn) {
-		this.panelOneBtn = panelOneBtn;
 	}
 
 	public JButton getPanelTwoBtn() {
 		return panelTwoBtn;
 	}
-
-	public void setPanelTwoBtn(JButton panelTwoBtn) {
-		this.panelTwoBtn = panelTwoBtn;
-	}
-
 	public JButton getPanelThreeBtn() {
 		return panelThreeBtn;
-	}
-
-	public void setPanelThreeBtn(JButton panelThreeBtn) {
-		this.panelThreeBtn = panelThreeBtn;
-	}
-
-	public JPanel getPanelRegelName() {
-		return panelRegelName;
-	}
-
-	public void setPanelRegelName(JPanel panelRegelName) {
-		this.panelRegelName = panelRegelName;
 	}
 
 	public JTextField getRegelNameTf() {
 		return regelNameTf;
 	}
-
-	public void setRegelNameTf(JTextField regelNameTf) {
-		this.regelNameTf = regelNameTf;
-	}
-
-	public JPanel getPanelCheckBoxen() {
-		return panelCheckBoxen;
-	}
-
-	public void setPanelCheckBoxen(JPanel panelCheckBoxen) {
-		this.panelCheckBoxen = panelCheckBoxen;
-	}
-
+	
 	public JComboBox getRichtungCombo() {
 		return richtungCombo;
-	}
-
-	public void setRichtungCombo(JComboBox richtungCombo) {
-		this.richtungCombo = richtungCombo;
 	}
 
 	public JComboBox getProtokollCombo() {
 		return protokollCombo;
 	}
 
-	public void setProtokollCombo(JComboBox protokollCombo) {
-		this.protokollCombo = protokollCombo;
-	}
-
-	public JPanel getPanelTextFelder() {
-		return panelTextFelder;
-	}
-
-	public void setPanelTextFelder(JPanel panelTextFelder) {
-		this.panelTextFelder = panelTextFelder;
-	}
-
 	public JTextField getQuelleTf() {
 		return quelleTf;
-	}
-
-	public void setQuelleTf(JTextField quelleTf) {
-		this.quelleTf = quelleTf;
 	}
 
 	public JTextField getZielTf() {
 		return zielTf;
 	}
 
-	public void setZielTf(JTextField zielTf) {
-		this.zielTf = zielTf;
-	}
-
 	public JTextField getSinglePortTf() {
 		return singlePortTf;
 	}
-
-	public void setSinglePortTf(JTextField singlePortTf) {
-		this.singlePortTf = singlePortTf;
-	}
-
 	public JTextField getMultiPortsTf() {
 		return multiPortsTf;
 	}
-
-	public void setMultiPortsTf(JTextField multiPortsTf) {
-		this.multiPortsTf = multiPortsTf;
-	}
-
+	
 	public JTextField getMacTf() {
 		return macTf;
 	}
-
-	public void setMacTf(JTextField macTf) {
-		this.macTf = macTf;
-	}
-
-	public JPanel getPanelAusgabe() {
-		return panelAusgabe;
-	}
-
-	public void setPanelAusgabe(JPanel panelAusgabe) {
-		this.panelAusgabe = panelAusgabe;
-	}
-
 	public JTextArea getAusgabeArea() {
 		return ausgabeArea;
 	}
-
-	public void setAusgabeArea(JTextArea ausgabeArea) {
-		this.ausgabeArea = ausgabeArea;
-	}
-
 	public JPanel getPanelButtons() {
 		return panelButtons;
 	}
-
-	public void setPanelButtons(JPanel panelButtons) {
-		this.panelButtons = panelButtons;
-	}
-
 	public JButton getSaveBtn() {
 		return saveBtn;
-	}
-
-	public void setSaveBtn(JButton saveBtn) {
-		this.saveBtn = saveBtn;
 	}
 
 	public JButton getNewBtn() {
 		return newBtn;
 	}
 
-	public void setNewBtn(JButton newBtn) {
-		this.newBtn = newBtn;
-	}
-
 	public JButton getExitBtn() {
 		return exitBtn;
-	}
-
-	public void setExitBtn(JButton exitBtn) {
-		this.exitBtn = exitBtn;
 	}
 
 }
