@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class ActionHandler implements ActionListener {
 	public ActionHandler(MyGui mainFrame) {
 		this.mf = mainFrame;
 		this.fb = new FileBuilder();
+		fb.createFile(new File("firewall.sh"));
 		this.stringBuilder = new StringBuilder();
 	}
 

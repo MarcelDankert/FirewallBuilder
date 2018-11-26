@@ -36,29 +36,30 @@ public class MyGui extends JFrame {
 	private JTextField regelNameTf;
 	private JPanel okPanelOne;
 	private JButton panelOneBtn;
-	
+
 	// Bausatz für Panel 2
 	private JPanel panelCheckBoxen;
 	private JComboBox richtungCombo, protokollCombo;
 	private JPanel okPanelTwo;
 	private JButton panelTwoBtn;
-	
+
 	// Bausatz für Panel 3
 	private JPanel panelTextFelder, portPanel;
 	private JTextField quelleTf, zielTf, singlePortTf, multiPortsTf, macTf;
 	private JPanel okPanelThree;
 	private JButton panelThreeBtn, addPortBtn;
-	
+
 	// Bausatz für Panel 4
 	private JPanel panelAusgabe;
 	private JTextArea ausgabeArea;
-	
+
 	// Bausatz für Panel 5
 	private JPanel panelButtons;
 	private JButton saveBtn, newBtn, exitBtn;
 	private ActionHandler handler;
 
 	public MyGui() {
+		// instanziieren des ActionListener
 		handler = new ActionHandler(this);
 		// Fenster erstellen und Layout setzen
 		setSize(450, 600);
@@ -83,7 +84,7 @@ public class MyGui extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// Panels hinzufügen
 		// Panel 1 zusammenbauen und hinzufügen
 		panelRegelName = new JPanel();
@@ -121,7 +122,7 @@ public class MyGui extends JFrame {
 		okPanelTwo = new JPanel();
 		okPanelTwo.setLayout(new GridLayout(1, 2));
 		okPanelTwo.add(new JLabel());
-		panelTwoBtn = new JButton("OK");		
+		panelTwoBtn = new JButton("OK");
 		panelTwoBtn.addActionListener(handler);
 		okPanelTwo.add(panelTwoBtn);
 		panelCheckBoxen.add(okPanelTwo);
@@ -161,7 +162,7 @@ public class MyGui extends JFrame {
 		okPanelThree.add(panelThreeBtn);
 		panelTextFelder.add(okPanelThree);
 		add(panelTextFelder);
-		
+
 		// Panel 4 zusammenbauen und hinzufügen
 		panelAusgabe = new JPanel();
 		panelAusgabe.setBorder(BorderFactory.createTitledBorder("4. Vorschau überprüfen"));
@@ -169,7 +170,7 @@ public class MyGui extends JFrame {
 		ausgabeArea.setLineWrap(true);
 		panelAusgabe.add(ausgabeArea);
 		add(panelAusgabe);
-		
+
 		// Panel 5 zusammenbauen und hinzufügen
 		panelButtons = new JPanel();
 		panelButtons.setLayout(new GridLayout(0, 3));
@@ -188,6 +189,9 @@ public class MyGui extends JFrame {
 		pack();
 	}
 
+	/*
+	 * diese Methode setzt alle Textfelder und Buttons auf den Startzustand zurück
+	 */
 	public void resetWindow() {
 		// Buttons einstellen
 		panelOneBtn.setEnabled(true);
@@ -209,9 +213,13 @@ public class MyGui extends JFrame {
 		multiPortsTf.setEnabled(true);
 	}
 
+	/*
+	 * benötigte Getter und Setter
+	 */
 	public JButton getAddPortBtn() {
 		return addPortBtn;
 	}
+
 	public JButton getPanelOneBtn() {
 		return panelOneBtn;
 	}
@@ -219,6 +227,7 @@ public class MyGui extends JFrame {
 	public JButton getPanelTwoBtn() {
 		return panelTwoBtn;
 	}
+
 	public JButton getPanelThreeBtn() {
 		return panelThreeBtn;
 	}
@@ -226,7 +235,7 @@ public class MyGui extends JFrame {
 	public JTextField getRegelNameTf() {
 		return regelNameTf;
 	}
-	
+
 	public JComboBox getRichtungCombo() {
 		return richtungCombo;
 	}
@@ -246,19 +255,23 @@ public class MyGui extends JFrame {
 	public JTextField getSinglePortTf() {
 		return singlePortTf;
 	}
+
 	public JTextField getMultiPortsTf() {
 		return multiPortsTf;
 	}
-	
+
 	public JTextField getMacTf() {
 		return macTf;
 	}
+
 	public JTextArea getAusgabeArea() {
 		return ausgabeArea;
 	}
+
 	public JPanel getPanelButtons() {
 		return panelButtons;
 	}
+
 	public JButton getSaveBtn() {
 		return saveBtn;
 	}
