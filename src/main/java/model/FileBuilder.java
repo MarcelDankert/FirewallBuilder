@@ -73,13 +73,13 @@ public class FileBuilder {
 
 	} // end test()
 
-	public void eraseLast() {
+	public void eraseLast() {/*
 		StringBuilder s = new StringBuilder();
 		Scanner reader = new Scanner(new BufferedReader(new FileReader("firewall.sh")));
 		while (reader.hasNextLine()) {
-			String line = reader.readLine();
+			//String line = reader.readLine();
 			if (reader.hasNextLine()) {
-				s.append(line);
+				//s.append(line);
 			}
 		}
 		try {
@@ -92,7 +92,7 @@ public class FileBuilder {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public void resetFileBuilder() {
