@@ -3,20 +3,18 @@ package model;
  * 
  */
 
-import java.io.BufferedReader;
 /**
  * @author s15
  *
  */
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
+import java.util.List;
 
 public class FileBuilder {
 	private String name, richtung, protokoll, quelle, ziel, mac, newRule, portpara, multiport, end;
@@ -73,28 +71,17 @@ public class FileBuilder {
 
 	} // end test()
 
-	public void eraseLast() {/*
-		StringBuilder s = new StringBuilder();
-		Scanner reader = new Scanner(new BufferedReader(new FileReader("firewall.sh")));
-		while (reader.hasNextLine()) {
-			//String line = reader.readLine();
-			if (reader.hasNextLine()) {
-				//s.append(line);
-			}
+	public void cutEnd(String fileName) throws IOException {
+	    List<String> lines = Files.readAllLines(new File(fileName).toPath());
+	    int listLength = lines.size();
+	    int listEnd = listLength-7;
+	    for (int i = listLength-1; i > listEnd; i--) {
+			lines.remove(i);
 		}
-		try {
-			fWriter = new FileWriter("config/lastWindow.txt");
-			writer = new BufferedWriter(fWriter);
-
-			writer.write(s.toString());
-
-			writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+	    BufferedWriter writer = new BufferedWriter(new FileWriter("firewall.sh"));
+		writer.write(String.join("\n", lines.toArray(new String[lines.size()])));
+		writer.close();
 	}
-
 	public void resetFileBuilder() {
 		this.name = "";
 		this.richtung = "";

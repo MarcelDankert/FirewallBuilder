@@ -16,8 +16,6 @@ public class ActionHandler implements ActionListener {
 	private MyGui mf;
 	private FileBuilder fb;
 	private StringBuilder stringBuilder;
-	
-	
 
 	public ActionHandler(MyGui mainFrame) {
 		this.mf = mainFrame;
@@ -29,12 +27,11 @@ public class ActionHandler implements ActionListener {
 		/*
 		 * Bedingungen für das erste Panel
 		 */
-		if(e.getSource()==mf.getPanelOneBtn()) {
+		if (e.getSource() == mf.getPanelOneBtn()) {
 			if (mf.getRegelNameTf().getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Bitte geben sie einen Regelnamen ein.",
-						"Fehlende Eingaben", JOptionPane.INFORMATION_MESSAGE);
-			}
-			else {
+				JOptionPane.showMessageDialog(null, "Bitte geben sie einen Regelnamen ein.", "Fehlende Eingaben",
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
 				fb.setName("echo \"" + mf.getRegelNameTf().getText() + "\"\r\n" + fb.getMap().get("IPT") + " -A ");
 				stringBuilder.append(fb.getName());
 				mf.getPanelOneBtn().setEnabled(false);
@@ -42,18 +39,18 @@ public class ActionHandler implements ActionListener {
 				mf.getAusgabeArea().setText(stringBuilder.toString());
 			}
 		}
-		
+
 		/*
 		 * Bedingungen für das zweite Panel
 		 */
-		if (e.getSource()==mf.getPanelTwoBtn()) {
+		if (e.getSource() == mf.getPanelTwoBtn()) {
 			if (mf.getRichtungCombo().getSelectedItem() == null || mf.getProtokollCombo().getSelectedItem() == null) {
-				JOptionPane.showMessageDialog(null, "Bitte wählen sie Richtung und Protokoll.",
-						"Fehlende Eingaben", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Bitte wählen sie Richtung und Protokoll.", "Fehlende Eingaben",
+						JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				fb.setRichtung((String) mf.getRichtungCombo().getSelectedItem());
 				fb.setProtokoll((String) mf.getProtokollCombo().getSelectedItem());
-				stringBuilder.append(fb.getRichtung()+" -p " + fb.getMap().get(fb.getProtokoll()));
+				stringBuilder.append(fb.getRichtung() + " -p " + fb.getMap().get(fb.getProtokoll()));
 				mf.getAusgabeArea().setText(stringBuilder.toString());
 				mf.getPanelTwoBtn().setEnabled(false);
 				mf.getPanelThreeBtn().setEnabled(true);
@@ -65,58 +62,59 @@ public class ActionHandler implements ActionListener {
 				}
 			}
 		}
-		
+
 		/*
 		 * Bedingungen für das dritte Panel
 		 */
-		if (e.getSource()==mf.getPanelThreeBtn()) {
-			if (mf.getQuelleTf().getText().isEmpty() || mf.getZielTf().getText().isEmpty() 
-					|| mf.getMacTf().getText().isEmpty() || (mf.getMultiPortsTf().getText().isEmpty() && !fb.getProtokoll().equals("ICMP"))) {
-				JOptionPane.showMessageDialog(null, "Bitte alle Felder ausfüllen.",
-						"Fehlende Eingaben", JOptionPane.INFORMATION_MESSAGE);
+		if (e.getSource() == mf.getPanelThreeBtn()) {
+			if (mf.getQuelleTf().getText().isEmpty() || mf.getZielTf().getText().isEmpty()
+					|| mf.getMacTf().getText().isEmpty()
+					|| (mf.getMultiPortsTf().getText().isEmpty() && !fb.getProtokoll().equals("ICMP"))) {
+				JOptionPane.showMessageDialog(null, "Bitte alle Felder ausfüllen.", "Fehlende Eingaben",
+						JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				fb.setQuelle(" -s " + mf.getQuelleTf().getText());
 				fb.setZiel(" -d " + mf.getZielTf().getText());
 				fb.setMac(mf.getMacTf().getText());
 				mf.getPanelThreeBtn().setEnabled(false);
 				mf.getSaveBtn().setEnabled(true);
-				if (fb.getPorts().size()==0) {
+				if (fb.getPorts().isEmpty()) {
 					fb.setPortpara("");
-				}
-				else if (fb.getPorts().size()==1) {
+				} else if (fb.getPorts().size() == 1) {
 					fb.setPortpara(" --dport ");
-				}
-				else {
+				} else if (fb.getPorts().size() > 1){
 					fb.setPortpara(" --dports ");
 					fb.setMultiport(fb.getMap().get("MP"));
 				}
-				stringBuilder.append(fb.getMultiport() + fb.getMap().get("MAC") + fb.getMac() + fb.getQuelle() + fb.getZiel() + fb.getPortpara() + String.join(",", fb.getPorts()) + " " + fb.getMap().get("R"));
+				stringBuilder
+						.append(fb.getMultiport() + fb.getMap().get("MAC") + fb.getMac() + fb.getQuelle() + fb.getZiel()
+								+ fb.getPortpara() + String.join(",", fb.getPorts()) + " " + fb.getMap().get("R"));
 				mf.getAusgabeArea().setText(stringBuilder.toString());
 			}
 		}
-		if (e.getSource()==mf.getAddPortBtn()) {
+		if (e.getSource() == mf.getAddPortBtn()) {
 			if (!mf.getSinglePortTf().getText().isEmpty()) {
 				fb.getPorts().add(mf.getSinglePortTf().getText());
 				mf.getSinglePortTf().setText(null);
 				mf.getMultiPortsTf().setText(fb.getPorts().toString());
 			}
 		}
-		
-		
-		
+		// Eventhandling für den Save Button
 		if (e.getSource() == mf.getSaveBtn()) {
+System.out.println(fb.getPorts().size());
+			try {
+				fb.cutEnd("firewall.sh");
 				fb.setNewRule(stringBuilder.toString() + fb.getEnd());
-				try {
-					fb.appendNewRule(fb.getNewRule());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(null, "Regel gespeichert.",
-						"Hinweis", JOptionPane.INFORMATION_MESSAGE);
-				mf.resetWindow();
-				fb.resetFileBuilder();
-			
+				fb.appendNewRule(fb.getNewRule());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(null, "Regel gespeichert.", "Hinweis", JOptionPane.INFORMATION_MESSAGE);
+			mf.resetWindow();
+			fb.resetFileBuilder();
+			stringBuilder = new StringBuilder();
+
 		}
 		/*
 		 * Der Neue Regel Button setzt alle Felder und Buttons zurück
