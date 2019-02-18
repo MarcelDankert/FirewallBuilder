@@ -24,7 +24,7 @@ public class ActionHandler implements ActionListener {
 		fileBuilder.createFile(new File("firewall.sh"));
 		this.stringBuilder = new StringBuilder();
 	}
-
+	
 	public void actionPerformed(ActionEvent e) {
 		/*
 		 * Bedingungen für das erste Panel
@@ -41,7 +41,6 @@ public class ActionHandler implements ActionListener {
 				gui.getAusgabeArea().setText(stringBuilder.toString());
 			}
 		}
-
 		/*
 		 * Bedingungen für das zweite Panel
 		 */
@@ -111,14 +110,12 @@ public class ActionHandler implements ActionListener {
 				fileBuilder.setNewRule(stringBuilder.toString() + fileBuilder.getEnd());
 				fileBuilder.appendNewRule(fileBuilder.getNewRule());
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			JOptionPane.showMessageDialog(null, "Regel gespeichert.", "Hinweis", JOptionPane.INFORMATION_MESSAGE);
 			gui.resetWindow();
 			fileBuilder.resetFileBuilder();
 			stringBuilder = new StringBuilder();
-
 		}
 		/*
 		 * Der Neue Regel Button setzt alle Felder und Buttons zurück
@@ -134,7 +131,5 @@ public class ActionHandler implements ActionListener {
 		if (e.getSource() == gui.getExitBtn()) {
 			System.exit(0);
 		}
-
 	}
-
 }
