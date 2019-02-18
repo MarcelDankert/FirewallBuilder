@@ -1,9 +1,5 @@
 package model;
 /**
- * 
- */
-
-/**
  * @author s15
  *
  */
@@ -20,6 +16,7 @@ public class FileBuilder {
 	private String name, richtung, protokoll, quelle, ziel, mac, newRule, portpara, multiport, end;
 	private ArrayList<String> ports;
 	private HashMap<String, String> map;
+	private BufferedWriter bw;
 
 	public FileBuilder() {
 		this.resetFileBuilder();
@@ -50,8 +47,6 @@ public class FileBuilder {
 
 	public void appendNewRule(String newRule) throws IOException {
 
-		BufferedWriter bw = null;
-
 		try {
 			// APPEND MODE SET HERE
 			bw = new BufferedWriter(new FileWriter("firewall.sh", true));
@@ -61,27 +56,24 @@ public class FileBuilder {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		} finally { // always close the file
-			if (bw != null)
-				try {
-					bw.close();
-				} catch (IOException ioe2) {
-					// just ignore it
-				}
-		} // end try/catch/finally
-
-	} // end test()
+			if (bw != null) {
+				bw.close();
+			}
+		}
+	}
 
 	public void cutEnd(String fileName) throws IOException {
-	    List<String> lines = Files.readAllLines(new File(fileName).toPath());
-	    int listLength = lines.size();
-	    int listEnd = listLength-7;
-	    for (int i = listLength-1; i > listEnd; i--) {
+		List<String> lines = Files.readAllLines(new File(fileName).toPath());
+		int listLength = lines.size();
+		int listEnd = listLength - 7;
+		for (int i = listLength - 1; i > listEnd; i--) {
 			lines.remove(i);
 		}
-	    BufferedWriter writer = new BufferedWriter(new FileWriter("firewall.sh"));
-		writer.write(String.join("\n", lines.toArray(new String[lines.size()])));
-		writer.close();
+		bw = new BufferedWriter(new FileWriter("firewall.sh"));
+		bw.write(String.join("\n", lines.toArray(new String[lines.size()])));
+		bw.close();
 	}
+
 	public void resetFileBuilder() {
 		this.name = "";
 		this.richtung = "";
@@ -106,9 +98,9 @@ public class FileBuilder {
 				+ "/sbin/iptables -A INPUT -i lo -m conntrack --ctstate NEW -j ACCEPT\r\n"
 				+ "/sbin/iptables -A OUTPUT\r\n" + this.end;
 
-		BufferedWriter writer = new BufferedWriter(new FileWriter("firewall.sh"));
-		writer.write(fileContent);
-		writer.close();
+		bw = new BufferedWriter(new FileWriter("firewall.sh"));
+		bw.write(fileContent);
+		bw.close();
 	}
 
 	public String getPortpara() {
